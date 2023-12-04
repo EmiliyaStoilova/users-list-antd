@@ -1,18 +1,20 @@
 import React from "react";
-import "./App.css";
+import { Provider } from "react-redux";
+import { store } from "./app/redux/store";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ROUTE_CONFIG } from "./constants/routes/config";
+import { HomePage, UserPosts } from "./pages";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<HomePage />} path={ROUTE_CONFIG.HOME}></Route>
+          <Route element={<UserPosts />} path={ROUTE_CONFIG.POSTS}></Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
