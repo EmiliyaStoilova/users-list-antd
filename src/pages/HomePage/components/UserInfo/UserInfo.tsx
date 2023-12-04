@@ -1,59 +1,37 @@
 import React, { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Typography, Row, Col, Button } from "antd";
+import { Row, Col, Button } from "antd";
 
 import { User } from "../../../types";
-
-const { Title, Paragraph, Link } = Typography;
+import { UserInformation } from "../../../../components";
 
 interface UserInfoProps {
   user: User;
-  setShowEditUserDatModal: (user: User | null) => void;
+  setShowEditUserDatModal?: (user: User | null) => void;
+  isPostsPage?: boolean;
 }
 
-export const UserInfo: FunctionComponent<UserInfoProps> = ({ user, setShowEditUserDatModal }) => {
+export const UserInfo: FunctionComponent<UserInfoProps> = ({ user, setShowEditUserDatModal, isPostsPage }) => {
   const navigate = useNavigate();
-  const { id, email, username, phone, address, website, company } = user;
+  const { id } = user;
 
   return (
     <div>
-      <Row justify="space-around" align="top">
-        <Col span={7}>
-          <Title level={4}>Data</Title>
-          <Paragraph>{email}</Paragraph>
-          <Paragraph>{username}</Paragraph>
-          <Paragraph>{phone}</Paragraph>
-          <Link href={website} target="_blank">
-            {website}
-          </Link>
-        </Col>
-        <Col span={7}>
-          <Title level={4}>Address</Title>
-          <Paragraph>{address.city}</Paragraph>
-          <Paragraph>{address.zipcode}</Paragraph>
-          <Paragraph>
-            {address.street}, {address.suite}
-          </Paragraph>
-        </Col>
-        <Col span={7}>
-          <Title level={4}>Company</Title>
-          <Paragraph>{company.name}</Paragraph>
-          <Paragraph>{company.bs}</Paragraph>
-          <Paragraph>{company.catchPhrase}</Paragraph>
-        </Col>
-      </Row>
+      <UserInformation user={user} />
 
       <Row justify="end">
         <Col span={3}>
-          <Button block onClick={() => setShowEditUserDatModal(user)}>
+          <Button block onClick={() => setShowEditUserDatModal && setShowEditUserDatModal(user)}>
             Edit
           </Button>
         </Col>
-        <Col span={3}>
-          <Button type="link" block onClick={() => navigate(`${id}`)}>
-            See posts
-          </Button>
-        </Col>
+        {!isPostsPage && (
+          <Col span={3}>
+            <Button type="link" block onClick={() => navigate(`${id}`)}>
+              See posts
+            </Button>
+          </Col>
+        )}
       </Row>
     </div>
   );
