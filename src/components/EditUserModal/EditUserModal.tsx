@@ -3,9 +3,9 @@ import { Modal, Typography, Input, Space, Button, Divider, Alert } from "antd";
 import { Formik, FormikErrors } from "formik";
 import _ from "lodash";
 
-import { EditUserDataValues, User } from "../../../types";
-import { ERROR_TYPE, emailRegex } from "../../../../constants";
-import { useUpdateUserMutation } from "../../../usersApi";
+import { EditUserDataValues, User } from "../../pages/types";
+import { ERROR_TYPE, emailRegex } from "../../constants";
+import { useUpdateUserMutation } from "../../pages/usersApi";
 
 const { Title } = Typography;
 

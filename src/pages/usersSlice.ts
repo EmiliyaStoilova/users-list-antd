@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/redux/store";
 import { usersApi } from "./usersApi";
-import { User } from "./types";
+import { User, UserPost } from "./types";
 
-const initialState: { users: User[] | null } = {
-  users: null
+const initialState: { users: User[] | null; posts: UserPost[] | null } = {
+  users: null,
+  posts: null
 };
 
 export const usersSlice = createSlice({
@@ -25,6 +26,21 @@ export const usersSlice = createSlice({
 
           if (updatedUser) {
             users[users.indexOf(updatedUser)] = payload;
+          }
+        }
+      })
+      .addMatcher(usersApi.endpoints.getUserPosts.matchFulfilled, (state, { payload }) => {
+        state.posts = payload;
+      })
+      .addMatcher(usersApi.endpoints.updatePost.matchFulfilled, (state, { payload }) => {
+        const { id } = payload;
+        const posts = state.posts;
+
+        if (posts) {
+          const updatedPost = posts.find((post) => post.id === id);
+
+          if (updatedPost) {
+            posts[posts.indexOf(updatedPost)] = payload;
           }
         }
       })

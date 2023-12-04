@@ -37,3 +37,15 @@ export interface EditUserDataValues {
   phone: string;
   website: string;
 }
+
+export interface UserPost {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
+export interface EditPostProps {
+  title: string;
+  body: string;
+}
